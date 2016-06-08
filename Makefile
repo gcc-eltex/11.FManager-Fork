@@ -4,7 +4,7 @@ SRC=$(wildcard src/*.c)
 OBJ=$(patsubst src/%.c,%.o,$(SRC))
 
 all: libs
-	gcc file_manager.c -o file_manager -L./lib/ -lfmanager -lncursesw -lm
+	gcc main.c -o main -L./lib/ -lfmanager -lncursesw -lm
 libs: $(OBJ)
 	ar -cr ./lib/libfmanager.a $(OBJ)
 	rm -rf *.o
@@ -13,4 +13,4 @@ $(OBJ):
 clear:
 	rm -rf *.o
 run:
-	./file_manager
+	./main
