@@ -13,6 +13,8 @@ void win_init()
 	dir_content[WIN_R] = NULL;
 	dir_count[WIN_L] = dir_get(dir_patch[WIN_L], &(dir_content[WIN_L]));
 	dir_count[WIN_R] = dir_get(dir_patch[WIN_R], &(dir_content[WIN_R]));
+	getcwd(te_path, 1024);
+	strcat(te_path, "/bin/text_editor");
 
 	//Инициализация ncurses
 	initscr();						//ncurses mode

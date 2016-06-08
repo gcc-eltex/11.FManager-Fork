@@ -91,7 +91,7 @@ void action_open()
 				execl( path, newdir.name, (char*)0 );
 			//Иначе открываем его как текстовый
 			else
-				execl( "/home/ivannikov/Eltex/101.Processes/bin/text_editor", "text_editor", path, (char*)0 );
+				execl( te_path, "text_editor", path, (char*)0 );
 			_exit(EXIT_FAILURE);
 		}
 		else
