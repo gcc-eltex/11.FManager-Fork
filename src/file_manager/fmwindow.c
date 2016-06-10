@@ -1,4 +1,4 @@
-#include "../header/shared.h"
+#include "../../header/file_manager/shared.h"
 
 //Инициальзирует все переменные и графику
 void win_init()	
@@ -106,6 +106,8 @@ void win_resize()
 //Очистка памяти и отключение графики
 void win_destroy()								
 {
+	clear();
+	refresh();
 	endwin();
 	system("clear");
 }

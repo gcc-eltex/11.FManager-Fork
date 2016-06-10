@@ -1,4 +1,4 @@
-#include "../header/shared.h"
+#include "../../header/file_manager/shared.h"
 
 unsigned dir_get(char *name, struct dline **content)
 {
