@@ -5,7 +5,7 @@ int main()
 	int key = 0;
 	setlocale(LC_ALL, "");
 	win_init();
-	
+
 	while((key = getch()) != 27)
 	{
 		switch(key)

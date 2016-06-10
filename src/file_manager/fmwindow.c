@@ -30,7 +30,7 @@ void win_init()
 	win[WIN_L] = newwin((LINES - 5), floor(COLS / 2 - 2), 2, 1);
 	win[WIN_R] = newwin((LINES - 5), COLS - floor(COLS / 2) - 2, 2, floor(COLS / 2) + 1);
 	win[WIN_PB] = newwin(2, COLS, LINES - 2, 0);
-
+	win[WIN_CF] = NULL;
 	//Цвета
 	start_color();
 	assume_default_colors(COLOR_WHITE,COLOR_BLUE);	//Цвета по умолчанию
@@ -97,6 +97,7 @@ void win_resize()
 	mvwin(win[WIN_BR], 0, floor(COLS / 2));
 	mvwin(win[WIN_R], 2, floor(COLS / 2) + 1);
 	mvwin(win[WIN_PB], LINES - 2, 0);
+	mvwin(win[WIN_CF], (LINES - 30) / 2, (COLS - 6) / 2);
 
 	//Обновляем 
 	refresh();
@@ -220,4 +221,41 @@ void winref_border(unsigned index)
 	else
 		mvwprintw(win[index], 0, 2, "%s", dir_patch[index - 2]);
 	wrefresh(win[index]);
+}
+
+//Перерисовывает окно для ввода парамеров
+void winref_input(char *data, int cpindex)
+{
+	wclear(win[WIN_CF]);
+
+	//Оформление
+	box(win[WIN_CF], 0, 0);
+	mvwprintw(win[WIN_CF] , 1, 6, "ENTER THE OPTIONS");
+	mvwprintw(win[WIN_CF] , 5, 1, "[ESC - CANCEL]  [ENTER - OK]");
+	wmove(win[WIN_CF], 3, 2);		//На случай если выводить нечего и не зайдет в цикл
+
+	//Вывод с указанной позиции
+	for(int i = 0, j = cpindex; i < 26 && data[j] !='\0'; i++, j++)
+		mvwaddch(win[WIN_CF], 3, i + 2, data[j]);
+	wrefresh(win[WIN_CF]);
+}
+
+//Инициализирует окно для ввода параметров
+void win_createinput()
+{
+	win[WIN_CF] = newwin(7, 30, (LINES - 7) / 2, (COLS - 30) / 2);
+	refresh();
+	wattron(win[WIN_CF] ,COLOR_PAIR(3));	//Меняем цвет
+	curs_set(1);							//Включаем курсор
+}
+
+//Удаляет окно для ввода параметров
+void win_destroyinput()
+{
+	if(win[WIN_CF] != NULL)
+		delwin(win[WIN_CF]);
+
+	wattroff(win[WIN_CF] ,COLOR_PAIR(3));	//Отключаем цвет
+	curs_set(0);							//Скрываем курсор
+	winref_all();
 }
